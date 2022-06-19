@@ -2,7 +2,11 @@ package com.matthieubalmont.swimacrosslakestopwatch.controllers;
 
 import com.matthieubalmont.swimacrosslakestopwatch.config.FxmlView;
 import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competition;
+import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Swimmer;
+import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.SwimmingClub;
 import com.matthieubalmont.swimacrosslakestopwatch.services.CompetitionService;
+import com.matthieubalmont.swimacrosslakestopwatch.services.SwimmerService;
+import com.matthieubalmont.swimacrosslakestopwatch.services.SwimmingClubService;
 import com.matthieubalmont.swimacrosslakestopwatch.utils.StageManager;
 import com.matthieubalmont.swimacrosslakestopwatch.views.CompetitionListCellView;
 import javafx.event.Event;
@@ -28,8 +32,6 @@ public class CompetitionController implements Initializable {
     private ListView<Competition> listViewCompetition;
     @Autowired
     private CompetitionService competitionService;
-    /*@Autowired
-    private CompetitionListCellView competitionListCellView;*/
     @Autowired
     @Lazy
     private StageManager stageManager;
@@ -41,6 +43,7 @@ public class CompetitionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         try {
             this.competitions = this.competitionService.findAll();
         } catch (Exception e) {

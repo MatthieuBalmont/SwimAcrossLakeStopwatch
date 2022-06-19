@@ -1,8 +1,10 @@
 package com.matthieubalmont.swimacrosslakestopwatch.services;
 
-import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competition;
+import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Swimmer;
 import com.matthieubalmont.swimacrosslakestopwatch.hibernate.utils.HibernateUtils;
-import jakarta.validation.*;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -14,19 +16,20 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class CompetitionServiceImpl implements CompetitionService {
+public class SwimmerServiceImpl implements SwimmerService {
 
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private static final Logger logger = LogManager.getLogger(CompetitionServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(SwimmerServiceImpl.class);
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    public List<Competition> findAll() throws Exception {
-        List<Competition> competitions;
+    @Override
+    public List<Swimmer> findAll() throws Exception {
+        List<Swimmer> swimmers;
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            competitions = session.createQuery("select c from Competition c", Competition.class).getResultList();
+            swimmers = session.createQuery("select s from Swimmer s", Swimmer.class).getResultList();
             transaction.commit();
         } catch (Exception e) {
             logger.warn("Exception raised in findAll : " + e.getMessage());
@@ -35,11 +38,12 @@ public class CompetitionServiceImpl implements CompetitionService {
             }
             throw new Exception("Database connection error");
         }
-        return competitions;
+        return swimmers;
     }
 
-    public Competition find(String id) throws Exception {
-        Competition competition;
+    @Override
+    public Swimmer find(String id) throws Exception {
+        Swimmer swimmer;
         Transaction transaction = null;
 
 
@@ -50,7 +54,7 @@ public class CompetitionServiceImpl implements CompetitionService {
         else {
             try (Session session = sessionFactory.openSession()) {
                 transaction = session.beginTransaction();
-                competition = session.find(Competition.class, id);
+                swimmer = session.find(Swimmer.class, id);
                 transaction.commit();
             } catch (Exception e) {
                 logger.warn("Exception raised in find : " + e.getMessage());
@@ -60,22 +64,23 @@ public class CompetitionServiceImpl implements CompetitionService {
                 throw new Exception("Database connection error");
             }
         }
-        if (competition == null){
-            logger.warn("Competition (" + id + ") didn't find");
-            throw new Exception("Competition didn't find");
+        if (swimmer == null){
+            logger.warn("Swimmer (" + id + ") didn't find");
+            throw new Exception("Swimmer didn't find");
         }
-        return competition;
+        return swimmer;
     }
 
-    public void create(Competition competition) throws Exception {
+    @Override
+    public void create(Swimmer swimmer) throws Exception {
         Transaction transaction = null;
-        checkDataConformity(competition, "Create");
+        checkDataConformity(swimmer, "Create");
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(competition);
+            session.save(swimmer);
             transaction.commit();
-            logger.info("Competition (" + competition.getId() + ") added to data base");
+            logger.info("Swimmer (" + swimmer.getId() + ") added to data base");
         } catch (Exception e) {
             logger.warn("Exception raised in create : " + e.getMessage());
             if (transaction != null) {
@@ -85,17 +90,18 @@ public class CompetitionServiceImpl implements CompetitionService {
         }
     }
 
-    public void delete(Competition competition) throws Exception {
+    @Override
+    public void delete(Swimmer swimmer) throws Exception {
         Transaction transaction = null;
 
-        checkDataConformity(competition, "Delete");
+        checkDataConformity(swimmer, "Delete");
 
-        if(this.existById(competition.getId())) {
+        if(this.existById(swimmer.getId())) {
             try (Session session = sessionFactory.openSession()) {
                 transaction = session.beginTransaction();
-                session.delete(competition);
+                session.delete(swimmer);
                 transaction.commit();
-                logger.info("Competition (" + competition.getId() + ") deleted from data base");
+                logger.info("Swimmer (" + swimmer.getId() + ") deleted from data base");
             } catch (Exception e) {
                 logger.warn("Exception raised in delete : " + e.getMessage());
                 if (transaction != null) {
@@ -106,17 +112,18 @@ public class CompetitionServiceImpl implements CompetitionService {
         }
     }
 
-    public void update(Competition competition) throws Exception {
+    @Override
+    public void update(Swimmer swimmer) throws Exception {
         Transaction transaction = null;
 
-        checkDataConformity(competition, "Update");
+        checkDataConformity(swimmer, "Update");
 
-        if (this.existById(competition.getId())) {
+        if (this.existById(swimmer.getId())) {
             try (Session session = sessionFactory.openSession()) {
                 transaction = session.beginTransaction();
-                session.update(competition);
+                session.update(swimmer);
                 transaction.commit();
-                logger.info("Competition (" + competition.getId() + ") updated to data base");
+                logger.info("Swimmer (" + swimmer.getId() + ") updated to data base");
             } catch (Exception e) {
                 logger.warn("Exception raised in update : " + e.getMessage());
                 if (transaction != null) {
@@ -127,21 +134,22 @@ public class CompetitionServiceImpl implements CompetitionService {
         }
     }
 
+    @Override
     public boolean existById(String id) throws Exception {
-        Competition competition = this.find(id);
-        return competition != null;
+        Swimmer swimmer = this.find(id);
+        return swimmer != null;
     }
 
-    private void checkDataConformity(Competition competition, String methodName) throws Exception {
-        if(competition == null){
-            logger.warn(methodName + " data problem : competition must not be 'null'");
-            throw new Exception("Competition must not be 'null'");
+    private void checkDataConformity(Swimmer swimmer, String methodName) throws Exception {
+        if(swimmer == null){
+            logger.warn(methodName + " data problem : swimmer must not be 'null'");
+            throw new Exception("Swimmer must not be 'null'");
         }
         //TODO make a string to see all errors
-        Set<ConstraintViolation<Competition>> constraintViolations = this.validator.validate(competition);
-        for (ConstraintViolation<Competition> c : constraintViolations) {
-            logger.warn(methodName + " data problem : " + c.getMessage());
-            throw new Exception(c.getMessage());
+        Set<ConstraintViolation<Swimmer>> constraintViolations = this.validator.validate(swimmer);
+        for (ConstraintViolation<Swimmer> s : constraintViolations) {
+            logger.warn(methodName + " data problem : " + s.getMessage());
+            throw new Exception(s.getMessage());
         }
     }
 }

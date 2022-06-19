@@ -10,11 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
-/**
- * @author <a href="mailto:matthieu.balmont@hotmail.fr">Matthieu Balmont</a>
- */
 @Configuration
 public class AppConfig {
     @Autowired

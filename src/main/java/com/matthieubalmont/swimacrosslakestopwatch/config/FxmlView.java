@@ -1,8 +1,5 @@
 package com.matthieubalmont.swimacrosslakestopwatch.config;
 
-/**
- * @author <a href="mailto:matthieu.balmont@hotmail.fr">Matthieu Balmont</a>
- */
 public enum FxmlView {
 
     COMPETITION {

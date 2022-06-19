@@ -4,11 +4,7 @@ import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competitio
 
 import java.util.List;
 
-/**
- * @author <a href="mailto:matthieu.balmont@hotmail.fr">Matthieu Balmont</a>
- */
 public interface CompetitionService {
-
     public List<Competition> findAll() throws Exception;
     public Competition find(String id) throws Exception;
     public void create(Competition competition) throws Exception;

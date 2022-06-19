@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="400.0" minWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.matthieubalmont.swimacrosslakestopwatch.controllers.CompetitionController">
+   <HBox alignment="CENTER_LEFT">
+      <padding>
+         <Insets bottom="15.0" top="15.0" />
+      </padding>
+      <Label contentDisplay="CENTER" text="Competition">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin>
+      </Label>
+      <Region HBox.hgrow="ALWAYS" />
+      <Button mnemonicParsing="false" onAction="#handleAddCompetition" text="Add competition">
+         <HBox.margin>
+            <Insets right="15.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
+   <ListView fx:id="listViewCompetition" focusTraversable="false" pickOnBounds="false" VBox.vgrow="ALWAYS">
+      <VBox.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" />
+      </VBox.margin>
+   </ListView>
+</VBox>

@@ -4,6 +4,7 @@ import com.matthieubalmont.swimacrosslakestopwatch.config.FxmlView;
 import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competition;
 import com.matthieubalmont.swimacrosslakestopwatch.services.CompetitionService;
 import com.matthieubalmont.swimacrosslakestopwatch.utils.StageManager;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -37,7 +38,7 @@ public class CompetitionAddController {
         nameTextField.setText("");
         dateDataPicker.setValue(null);
 
-        this.dateDataPicker.setConverter(new StringConverter<LocalDate>()
+        this.dateDataPicker.setConverter(new StringConverter<>()
         {
             private final DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -68,7 +69,7 @@ public class CompetitionAddController {
     }
 
     @FXML
-    private void handleAddCompetition(Event event) throws Exception {
+    private void handleAddCompetition(Event event) {
         LocalDate localDateObj = this.dateDataPicker.getValue();
         if (localDateObj == null) {
             stageManager.showMsg("Error", "Date must not be null", Alert.AlertType.ERROR);

@@ -2,7 +2,9 @@ package com.matthieubalmont.swimacrosslakestopwatch.controllers;
 
 import com.matthieubalmont.swimacrosslakestopwatch.config.FxmlView;
 import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competition;
+import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Race;
 import com.matthieubalmont.swimacrosslakestopwatch.services.CompetitionService;
+import com.matthieubalmont.swimacrosslakestopwatch.services.RaceService;
 import com.matthieubalmont.swimacrosslakestopwatch.utils.StageManager;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -15,40 +17,37 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class CompetitionListCellController {
-
+public class RaceListCellController {
     @FXML
     private Label titleLabel;
     @Autowired
-    private CompetitionService competitionService;
+    private RaceService raceService;
     @Autowired
     @Lazy
     private StageManager stageManager;
 
-    private Competition competition;
+    private Race race;
 
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
-        this.titleLabel.setText(competition.getDateToString() + " - " + competition.getName());
+    public void setRace(Race race) {
+        this.race = race;
+        this.titleLabel.setText("Start order : " + race.getStartOrder() + " - " + race.getDistance() + "m");
     }
 
     @FXML
     private void handleDelete(Event event) {
         event.consume();
         try {
-            this.competitionService.delete(this.competition);
+            this.raceService.delete(this.race);
         } catch (Exception e) {
             this.stageManager.showMsg("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
         //TODO Not really clear
-        this.stageManager.switchScene(FxmlView.COMPETITION);
+        stageManager.switchScene(FxmlView.RACE);
     }
 
     @FXML
     private void handleOpen(Event event) {
         event.consume();
-        this.competitionService.setCurrentCompetition(this.competition);
-        this.stageManager.switchScene(FxmlView.TIMING);
+        stageManager.switchScene(FxmlView.TIMING);
     }
-
 }

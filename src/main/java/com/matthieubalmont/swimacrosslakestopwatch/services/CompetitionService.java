@@ -5,10 +5,12 @@ import com.matthieubalmont.swimacrosslakestopwatch.hibernate.entities.Competitio
 import java.util.List;
 
 public interface CompetitionService {
-    public List<Competition> findAll() throws Exception;
-    public Competition find(String id) throws Exception;
-    public void create(Competition competition) throws Exception;
-    public void delete(Competition competition) throws Exception;
-    public void update(Competition competition) throws Exception;
-    public boolean existById(String id) throws Exception;
+    List<Competition> findAll() throws Exception;
+    Competition find(String id) throws Exception;
+    void create(Competition competition) throws Exception;
+    void delete(Competition competition) throws Exception;
+    void update(Competition competition) throws Exception;
+    boolean existById(String id) throws Exception;
+    void setCurrentCompetition(Competition competition);
+    Competition getCurrentCompetition();
 }

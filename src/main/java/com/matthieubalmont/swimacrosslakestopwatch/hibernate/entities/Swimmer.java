@@ -29,9 +29,9 @@ public class Swimmer {
     @Size(min = 1, max = 6, message = "Nationality must be between {min} and {max} characters")
     private String nationality;
     @NotNull(message = "Year of birth must not be 'null'")
-    private Integer yearOfBirth;
+    private Integer birthYear;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "swimmingClub_id", nullable=false)
+    @JoinColumn(name = "swimmingClub_id")
     @NotNull(message = "Swimming club must not be 'null'")
     private SwimmingClub swimmingClub;
     @OneToMany(mappedBy = "swimmer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -41,12 +41,12 @@ public class Swimmer {
 
     }
 
-    public Swimmer(String firstName, String lastName, String genre, String nationality, Integer yearOfBirth, SwimmingClub swimmingClub) {
+    public Swimmer(String firstName, String lastName, String genre, String nationality, Integer birthYear, SwimmingClub swimmingClub) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.genre = genre;
         this.nationality = nationality;
-        this.yearOfBirth = yearOfBirth;
+        this.birthYear = birthYear;
         this.swimmingClub = swimmingClub;
     }
 
@@ -58,16 +58,48 @@ public class Swimmer {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(Integer yearOfBirth) {
+        this.birthYear = yearOfBirth;
     }
 
     public SwimmingClub getSwimmingClub() {
         return swimmingClub;
     }
 
-    public Integer getYearOfBirth() {
-        return yearOfBirth;
+    public void setSwimmingClub(SwimmingClub swimmingClub) {
+        this.swimmingClub = swimmingClub;
     }
 
     @Override
@@ -75,11 +107,11 @@ public class Swimmer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Swimmer swimmer = (Swimmer) o;
-        return id.equals(swimmer.id) && firstName.equals(swimmer.firstName) && lastName.equals(swimmer.lastName) && genre.equals(swimmer.genre) && nationality.equals(swimmer.nationality) && yearOfBirth.equals(swimmer.yearOfBirth);
+        return id.equals(swimmer.id) && firstName.equals(swimmer.firstName) && lastName.equals(swimmer.lastName) && genre.equals(swimmer.genre) && nationality.equals(swimmer.nationality) && birthYear.equals(swimmer.birthYear);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, genre, nationality, yearOfBirth);
+        return Objects.hash(id, firstName, lastName, genre, nationality, birthYear);
     }
 }

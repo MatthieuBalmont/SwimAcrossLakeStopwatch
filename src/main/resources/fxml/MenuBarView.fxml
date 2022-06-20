@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+
+<MenuBar xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="com.matthieubalmont.swimacrosslakestopwatch.controllers.MenuBarController">
+   <Menu mnemonicParsing="false" text="File">
+      <MenuItem mnemonicParsing="false" onAction="#handleNewMenu" text="New"/>
+      <MenuItem mnemonicParsing="false" onAction="#handleCloseMenu" text="Close"/>
+      <MenuItem mnemonicParsing="false" onAction="#handleQuitMenu" text="Quit"/>
+   </Menu>
+   <Menu mnemonicParsing="false" text="Edit">
+      <MenuItem mnemonicParsing="false" onAction="#handleRaceMenu" text="Race"/>
+      <MenuItem mnemonicParsing="false" onAction="#handleSwimmerMenu" text="Swimmer"/>
+      <MenuItem mnemonicParsing="false" onAction="#handleSwimmingCulbMenu" text="Swimming club"/>
+   </Menu>
+   <Menu mnemonicParsing="false" text="Help">
+      <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About"/>
+   </Menu>
+</MenuBar>

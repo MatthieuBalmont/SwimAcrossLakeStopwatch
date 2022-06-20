@@ -19,6 +19,30 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/CompetitionListCellView.fxml";
         }
+    },
+    TIMING{
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/TimingView.fxml";
+        }
+    },
+    RACE{
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/RaceView.fxml";
+        }
+    },
+    ADD_RACE{
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/RaceAddView.fxml";
+        }
+    },
+    RACE_LIST_CELL{
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/RaceListCellView.fxml";
+        }
     };
 
     public abstract String getFxmlFile();

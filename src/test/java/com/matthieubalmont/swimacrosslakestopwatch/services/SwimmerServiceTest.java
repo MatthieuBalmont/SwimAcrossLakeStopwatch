@@ -25,7 +25,7 @@ public class SwimmerServiceTest {
         this.swimmingClub = new SwimmingClub("HCN Tullins");
 
         try {
-            swimmingClubService.create(swimmingClub);
+            swimmingClubService.create(this.swimmingClub);
         } catch (Exception e) {
             fail();
         }
@@ -229,52 +229,82 @@ public class SwimmerServiceTest {
 
     }
 
-    /*@Test
+    @Test
     void update() {
-        Competition competition1 = new Competition("TestCompetition1", new GregorianCalendar(2022, Calendar.AUGUST, 16));
-        Competition competition2 = new Competition("TestCompetition2", new GregorianCalendar(2021, Calendar.APRIL, 3));
+        Swimmer swimmer1 = new Swimmer("testFirstName1", "TestLastName1", "H", "FRA", 1900, this.swimmingClub);
+        Swimmer swimmer2 = new Swimmer("testFirstName2", "TestLastName2", "H", "FRA", 2020, this.swimmingClub);
 
-        try {
-            this.competitionService.create(competition1);
-        } catch (Exception e) {
-            fail();
-        }
+        assertDoesNotThrow(() -> this.swimmerService.create(swimmer1));
 
-        competition1.setName("UpdateTestCompetition1");
-        assertDoesNotThrow(() -> this.competitionService.update(competition1));
+        swimmer1.setFirstName("");
+        Exception exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("First name must be between"));
 
-        Exception exception = assertThrows(Exception.class, () -> this.competitionService.update(competition2));
+        exception = assertThrows(Exception.class, () -> this.swimmerService.update(swimmer2));
         assertEquals("Id must not be 'null'", exception.getMessage());
 
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(null));
-        assertEquals("Competition must not be 'null'", exception.getMessage());
+        swimmer1.setFirstName(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("First name must not be 'null'", exception.getMessage());
 
-        competition1.setDate(null);
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(competition1));
-        assertEquals("Date must not be 'null'", exception.getMessage());
+        swimmer1.setFirstName("A really long string more than 50 character for test");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("First name must be between"));
 
-        competition1.setDate(new GregorianCalendar(2022, Calendar.AUGUST, 16));
-        competition1.setName(null);
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(competition1));
-        assertEquals("Name must not be 'null'", exception.getMessage());
+        swimmer1.setFirstName("testFirstName1");
+        swimmer1.setLastName("");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Last name must be between"));
 
-        competition1.setName("");
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(competition1));
-        assertTrue(exception.getMessage().contains("Name must be between"));
+        swimmer1.setLastName(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("Last name must not be 'null'", exception.getMessage());
 
-        competition1.setName("aa");
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(competition1));
-        assertTrue(exception.getMessage().contains("Name must be between"));
+        swimmer1.setLastName("A really long string more than 50 character for test");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Last name must be between"));
 
-        competition1.setName("A really long string more than 50 character for test");
-        exception = assertThrows(Exception.class, () -> this.competitionService.update(competition1));
-        assertTrue(exception.getMessage().contains("Name must be between"));
+        swimmer1.setLastName("TestLastName1");
+        swimmer1.setGenre("");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Genre must be between"));
 
-        competition1.setName("UpdateTestCompetition1");
+        swimmer1.setGenre(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("Genre must not be 'null'", exception.getMessage());
+
+        swimmer1.setGenre("HH");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Genre must be between"));
+
+        swimmer1.setGenre("H");
+        swimmer1.setNationality("");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Nationality must be between"));
+
+        swimmer1.setNationality(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("Nationality must not be 'null'", exception.getMessage());
+
+        swimmer1.setNationality("NAT to long");
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertTrue(exception.getMessage().contains("Nationality must be between"));
+
+        swimmer1.setNationality("FRA");
+        swimmer1.setBirthYear(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("Year of birth must not be 'null'", exception.getMessage());
+
+        swimmer1.setBirthYear(2020);
+        swimmer1.setSwimmingClub(null);
+        exception = assertThrows(Exception.class, () -> this.swimmerService.create(swimmer1));
+        assertEquals("Swimming club must not be 'null'", exception.getMessage());
+
+        swimmer1.setSwimmingClub(this.swimmingClub);
         try {
-            this.competitionService.delete(competition1);
+            this.swimmerService.delete(swimmer1);
         } catch (Exception e) {
             fail();
         }
-    }*/
+    }
 }
